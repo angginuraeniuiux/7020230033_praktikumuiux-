@@ -11,49 +11,69 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(product.name)),
+      appBar: AppBar(
+        title: Text(product.name),
+      ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              product.image,
-              height: 250,
-              fit: BoxFit.contain,
+            Center(
+              child: Image.asset(
+                product.image,
+                height: 220,
+                fit: BoxFit.contain,
+              ),
             ),
             const SizedBox(height: 20),
+
+            // NAMA PRODUK
+            Text(
+              product.name,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            // HARGA (BIRU)
             Text(
               product.price,
               style: const TextStyle(
                 fontSize: 18,
+                color: Colors.blue,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 12),
 
-            // ✅ DESKRIPSI PRODUK (TUGAS TAMBAHAN MODUL)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                product.description,
-                style: const TextStyle(
-                  color: Colors.grey,
-                  height: 1.5,
-                ),
-                textAlign: TextAlign.justify,
+            // DESKRIPSI (TUGAS TAMBAHAN)
+            Text(
+              product.description,
+              style: const TextStyle(
+                fontSize: 16,
               ),
             ),
+            const SizedBox(height: 30),
 
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Provider.of<CartProvider>(context, listen: false)
-                    .addToCart(product);
+            // TOMBOL TAMBAH KE KERANJANG
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Provider.of<CartProvider>(context, listen: false)
+                      .addToCart(product);
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Ditambahkan ke keranjang")),
-                );
-              },
-              child: const Text("Tambah ke Keranjang"),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Produk ditambahkan ke keranjang"),
+                    ),
+                  );
+                },
+                child: const Text("Tambah ke Keranjang"),
+              ),
             ),
           ],
         ),

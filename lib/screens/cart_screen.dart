@@ -13,22 +13,62 @@ class CartScreen extends StatelessWidget {
       return const Center(child: Text("Keranjang kosong"));
     }
 
-    return ListView.builder(
-      itemCount: cart.items.length,
-      itemBuilder: (context, index) {
-        final product = cart.items[index];
-        return ListTile(
-          leading: Image.asset(product.image, width: 50),
-          title: Text(product.name),
-          subtitle: Text(product.price),
-          trailing: IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              cart.removeFromCart(product);
-            },
-          ),
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Keranjang"),
+      ),
+      body: ListView.builder(
+        itemCount: cart.items.length,
+        itemBuilder: (context, index) {
+          final product = cart.items[index];
+
+          return Card(
+            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            child: ListTile(
+              leading: Image.asset(product.image, width: 50),
+              title: Text(product.name),
+              subtitle: Text(product.price),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.remove),
+                    onPressed: () {}, 
+                  ),
+                  const Text("1"),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {}, 
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {
+                      cart.removeFromCart(product);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 5,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        child: ElevatedButton(
+          onPressed: () {},
+          child: const Text("Checkout"),
+        ),
+      ),
     );
   }
 }
